@@ -23,100 +23,140 @@
  *
  */
 
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.JButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
-import javax.swing.JSplitPane;
 import javax.swing.JFrame;
 import javax.swing.BorderFactory;
+
+import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
-public class DOPEBroker extends JPanel {
-    static final int    BORDER_SIDE     = 5;
-    static final int    BORDER_TOP      = 5;
-    static final int    BORDER_BOTTOM   = 15;
-    static final int    BORDER_BETWEEN  = 2;
-    static final String INITIAL_MSG     = "DOPE broker, version 1.0.0a1";
-    static final String CMD_LOAD        = "Load...";
-    static final String CMD_SAVE        = "Save";
+import cc.chaos.mock.MockSelectionUI;
 
-    JSplitPane              _body;
-    JPanel                  _inspect;
-    JTree                   _view;
-    JLabel                  _status;
-    JButton                 _load, _save;
-    DefaultMutableTreeNode  _root;
+public class DOPEBroker extends JPanel
+    implements cc.chaos.gui.GUIConstants
+{
+    static final String     INITIAL_MSG     = "DOPE broker, version 1.0.0a1";
+
+    static final String []  SAMPLE_PROJECTS = new String[] { "AirTrack_Pupil", "FastEvent_Adapt" };
+    static final String []  SAMPLE_SUBJECTS = new String[] { "S005", "S006", "A22" };
+
+    JLabel  _status;
+
+    MockSelectionUI _projects = new MockSelectionUI("Project: ", SAMPLE_PROJECTS);
+    MockSelectionUI _subjects = new MockSelectionUI("Subject: ", SAMPLE_SUBJECTS);
 
     public DOPEBroker() {
         super();
         setLayout(new BorderLayout());
-        _root = new DefaultMutableTreeNode("root");
-        setupTestNodes();
 
-        _inspect = new JPanel();
-
-        _view = new JTree(_root);
-        _view.setRootVisible(false);
-
-        _body = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, _view, _inspect);
-        _body.setResizeWeight(0.5);
-
-        _load   = new JButton(CMD_LOAD);
-        _save   = new JButton(CMD_SAVE);
         _status = new JLabel(INITIAL_MSG);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        panel.add(_status);
-        panel.add(Box.createHorizontalGlue());
-        panel.add(_load);
-        panel.add(_save);
-        panel.setBorder(BorderFactory.createEmptyBorder(BORDER_BETWEEN,
-                                                BORDER_BETWEEN,
-                                                BORDER_BETWEEN,
-                                                BORDER_BETWEEN));
-        add(_body, BorderLayout.CENTER);
-        add(panel, BorderLayout.PAGE_END);
+        add(createMainPanel(), BorderLayout.CENTER);
+        add(createStatusPanel(), BorderLayout.PAGE_END);
         setBorder(BorderFactory.createEmptyBorder(0,
                                                 0,
                                                 BORDER_BOTTOM,
                                                 0));
     }
 
-    private void updateBorder(double proportional) {
-        _body.setDividerLocation(proportional);
+    /**
+    *   a routine for creation of the "main" panel,
+    *   including the project/subject selectors and the tabbed panes.
+    *
+    *   this method is called during the initialization.
+    *   @return     a JPanel object representing the "main" panel.
+    */
+    private JPanel createMainPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(createSelectorPanel());
+        panel.add(createSubjectPanel());
+        return panel;
     }
 
-    private void setupTestNodes() {
-        DefaultMutableTreeNode raw          = new DefaultMutableTreeNode("raw");
+    /**
+    *   a routine for creation of the selectors panel in a GridBagLayout.
+    *
+    *   this method is called during the initialization.
+    *   @return     a JPanel object representing the "selectors" panel.
+    */
+    private JPanel createSelectorPanel() {
+        JPanel          panel   = new JPanel();
+        GridBagLayout   grid    = new GridBagLayout();
+        GridBagConstraints con  = new GridBagConstraints();
+        panel.setLayout(grid);
 
-        DefaultMutableTreeNode behav        = new DefaultMutableTreeNode("behav");
-        behav.add(new DefaultMutableTreeNode("<all> (.txt)"));
-        raw.add(behav);
+        con.gridy = 0;
+        addSelectorForUI(panel, grid, _projects, con);
+        con.gridy = 1;
+        addSelectorForUI(panel, grid, _subjects, con);
+        return panel;
+    }
 
-        DefaultMutableTreeNode fastevent    = new DefaultMutableTreeNode("fastevent");
-        fastevent.add(new DefaultMutableTreeNode("AER (.aedat)"));
-        fastevent.add(new DefaultMutableTreeNode("FE (.fedat)"));
-        raw.add(fastevent);
+    /**
+     *  a supportive subroutine for adding form components for a selector UI.
+     */
+    private void addSelectorForUI(JPanel panel,
+                                    GridBagLayout grid,
+                                    MockSelectionUI ui,
+                                    GridBagConstraints con)
+    {
+        con.gridx = GridBagConstraints.RELATIVE;
+        grid.setConstraints(ui.getHeader(), con);
+        panel.add(ui.getHeader());
+        grid.setConstraints(ui.getSelector(), con);
+        panel.add(ui.getSelector());
+        grid.setConstraints(ui.getSettingsButton(), con);
+        panel.add(ui.getSettingsButton());
+        grid.setConstraints(ui.getToggleButton(), con);
+        panel.add(ui.getToggleButton());
+    }
 
-        DefaultMutableTreeNode video        = new DefaultMutableTreeNode("video");
-        video.add(new DefaultMutableTreeNode("<all> (.mp4)"));
-        raw.add(video);
-        _root.add(raw);
+
+    /**
+    *   a routine for creation of the subject panel.
+    *
+    *   this method is called during the initialization.
+    *   @return     a JTabbedPane object representing the "subject" panel.
+    */
+    private JTabbedPane createSubjectPanel() {
+        JTabbedPane panel = new JTabbedPane();
+        panel.addTab("Log", new JPanel());
+        panel.addTab("Session", new JPanel());
+        panel.addTab("Analysis", new JPanel());
+        return panel;
+    }
+
+    /**
+    *   a routine for creation of the status panel in a BoxLayout.
+    *
+    *   this method is called during the initialization.
+    *   @return     a JPanel object representing the "status" panel.
+    */
+    private JPanel createStatusPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(_status);
+        panel.add(Box.createHorizontalGlue());
+        panel.setBorder(BorderFactory.createEmptyBorder(BORDER_BETWEEN,
+                                                BORDER_BETWEEN,
+                                                BORDER_BETWEEN,
+                                                BORDER_BETWEEN));
+        return panel;
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("DOPE Broker");
+        JFrame frame = new JFrame("DOPE broker");
         DOPEBroker broker = new DOPEBroker();
         frame.setContentPane(broker);
-        frame.setSize(600, 400);
+        frame.setSize(600, 250);
         frame.setLocation(120, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        broker.updateBorder(0.3);
     }
 }
