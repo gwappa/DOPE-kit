@@ -35,12 +35,12 @@ import javax.swing.Box;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class DOPEFactory extends JPanel {
+public class DOPEBroker extends JPanel {
     static final int    BORDER_SIDE     = 5;
     static final int    BORDER_TOP      = 5;
     static final int    BORDER_BOTTOM   = 15;
     static final int    BORDER_BETWEEN  = 2;
-    static final String INITIAL_MSG     = "DOPE Factory, version 1.0.0a1";
+    static final String INITIAL_MSG     = "DOPE broker, version 1.0.0a1";
     static final String CMD_LOAD        = "Load...";
     static final String CMD_SAVE        = "Save";
 
@@ -51,7 +51,7 @@ public class DOPEFactory extends JPanel {
     JButton                 _load, _save;
     DefaultMutableTreeNode  _root;
 
-    public DOPEFactory() {
+    public DOPEBroker() {
         super();
         setLayout(new BorderLayout());
         _root = new DefaultMutableTreeNode("root");
@@ -110,13 +110,13 @@ public class DOPEFactory extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("DOPE Factory");
-        DOPEFactory factory = new DOPEFactory();
-        frame.setContentPane(factory);
+        JFrame frame = new JFrame("DOPE Broker");
+        DOPEBroker broker = new DOPEBroker();
+        frame.setContentPane(broker);
         frame.setSize(600, 400);
         frame.setLocation(120, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        factory.updateBorder(0.3);
+        broker.updateBorder(0.3);
     }
 }

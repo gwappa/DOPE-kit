@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'DOPE-kit'
-include 'DOPE-factory'
+include 'DOPE-broker'
