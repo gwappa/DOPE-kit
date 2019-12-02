@@ -12,8 +12,12 @@ compileJava {
     options.compilerArgs += ["-Xlint:unchecked",]
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    // nothing for now
+    implementation "org.json:json:20190722"
 }
 
 mainClassName = 'DOPEBroker'

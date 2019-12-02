@@ -23,7 +23,7 @@
  *
  */
 
-package cc.chaos.mock;
+package cc.chaos.opendata.mock;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;

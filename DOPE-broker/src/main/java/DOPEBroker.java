@@ -35,7 +35,7 @@ import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
-import cc.chaos.mock.MockSelectionUI;
+import cc.chaos.opendata.mock.MockSelectionUI;
 
 public class DOPEBroker extends JPanel
     implements cc.chaos.gui.GUIConstants
