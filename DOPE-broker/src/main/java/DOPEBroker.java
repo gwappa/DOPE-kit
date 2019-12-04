@@ -35,7 +35,10 @@ import javax.swing.Box;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
-import cc.chaos.opendata.mock.MockSelectionUI;
+import cc.chaos.opendata.dope.ProjectManager;
+import cc.chaos.opendata.mock.MockSelectorUI;
+import cc.chaos.opendata.gui.OpenCloseSelectorUI;
+import cc.chaos.opendata.gui.SelectionOpenCloseUI;
 
 public class DOPEBroker extends JPanel
     implements cc.chaos.gui.GUIConstants
@@ -47,8 +50,8 @@ public class DOPEBroker extends JPanel
 
     JLabel  _status;
 
-    MockSelectionUI _projects = new MockSelectionUI("Project: ", SAMPLE_PROJECTS);
-    MockSelectionUI _subjects = new MockSelectionUI("Subject: ", SAMPLE_SUBJECTS);
+    OpenCloseSelectorUI _projects = new SelectionOpenCloseUI("Project: ", new ProjectManager());
+    OpenCloseSelectorUI _subjects = new MockSelectorUI("Subject: ", SAMPLE_SUBJECTS);
 
     public DOPEBroker() {
         super();
@@ -103,7 +106,7 @@ public class DOPEBroker extends JPanel
      */
     private void addSelectorForUI(JPanel panel,
                                     GridBagLayout grid,
-                                    MockSelectionUI ui,
+                                    OpenCloseSelectorUI ui,
                                     GridBagConstraints con)
     {
         con.gridx = GridBagConstraints.RELATIVE;
@@ -111,8 +114,6 @@ public class DOPEBroker extends JPanel
         panel.add(ui.getHeader());
         grid.setConstraints(ui.getSelector(), con);
         panel.add(ui.getSelector());
-        grid.setConstraints(ui.getSettingsButton(), con);
-        panel.add(ui.getSettingsButton());
         grid.setConstraints(ui.getToggleButton(), con);
         panel.add(ui.getToggleButton());
     }

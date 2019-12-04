@@ -42,7 +42,7 @@ import org.json.JSONException;
 
 import cc.chaos.util.Result;
 import cc.chaos.opendata.FileSystemBackend;
-import cc.chaos.opendata.dope.core.ManagedProject;
+import cc.chaos.opendata.dope.core.ManagedProjectSpecification;
 
 public class DOPESettings
     implements DOPE
@@ -104,6 +104,8 @@ public class DOPESettings
         try {
             Writer out = Files.newBufferedWriter(SOURCE, CHARSET);
             SETTINGS.write(out, INDENT, 0);
+            out.flush();
+            out.close();
         } catch (JSONException e) {
             LOGGER.severe(String.format("error writing the settings: %s", e.getMessage()));
             e.printStackTrace();
@@ -113,12 +115,13 @@ public class DOPESettings
         }
     }
 
-    public static ManagedProject[] getManagedProjects() {
+    public static ManagedProjectSpecification[] getManagedProjectSpecifications()
+    {
         if (SETTINGS == null) {
             load();
         }
         JSONArray arr = SETTINGS.optJSONArray(KEY_PROJ);
-        ManagedProject[] tmp = new ManagedProject[0];
+        ManagedProjectSpecification[] tmp = new ManagedProjectSpecification[0];
         if (arr == null) {
             // project-key not found: create a new one
             List<Object> items = Collections.emptyList();
@@ -126,10 +129,10 @@ public class DOPESettings
             writeBack();
             return tmp;
         } else {
-            List<ManagedProject> ret = new LinkedList<>();
+            List<ManagedProjectSpecification> ret = new LinkedList<>();
             for (int idx=0; idx<arr.length(); idx++) {
                 try {
-                    ret.add(ManagedProject.load(arr.getJSONObject(idx)));
+                    ret.add(ManagedProjectSpecification.load(arr.getJSONObject(idx)));
                 } catch (JSONException e) {
                     LOGGER.warning(String.format("managed project #%d does not seem to be an object: %s",
                                                 idx+1, e.getMessage()));
@@ -140,5 +143,10 @@ public class DOPESettings
             }
             return ret.toArray(tmp);
         }
+    }
+
+    public static void setManagedProjectSpecifications(ManagedProjectSpecification[] projects)
+    {
+        // TODO
     }
 }

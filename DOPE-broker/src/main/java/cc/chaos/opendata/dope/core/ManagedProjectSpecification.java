@@ -32,34 +32,28 @@ import org.json.JSONObject;
 /**
  *  configurations for a managed project
  */
-public class ManagedProject
-    implements Project
+public class ManagedProjectSpecification
+    implements ProjectSpecification
 {
-    static final String KEY_PROJ_NAME       = "name";
-    static final String KEY_PROJ_SETTINGS   = "settings";
-    static final String KEY_PROJ_DATADIR    = "datadir";
-
     String _name;
     Path   _settings;
-    Path   _datadir;
 
-    public ManagedProject(final String name,
-                          final Path settings,
-                          final Path datadir)
+    public ManagedProjectSpecification(final String name,
+                          final Path settings)
     {
         _name       = name;
         _settings   = settings;
-        _datadir    = datadir;
+        // _datadir    = datadir;
     }
 
     @Override public String getName()          { return _name;     }
     @Override public Path   getSettingsFile()  { return _settings; }
-    @Override public Path   getDataDirectory() { return _datadir;  }
+    // @Override public Path   getDataDirectory() { return _datadir;  }
 
     /**
      *  initializes a ManagedProject from a JSON entry.
      */
-    public static ManagedProject load(JSONObject src)
+    public static ManagedProjectSpecification load(JSONObject src)
         throws IOException
     {
         String name     = src.optString(KEY_PROJ_NAME);
@@ -70,10 +64,10 @@ public class ManagedProject
         if (settings == null) {
             throw new IOException(String.format("'settings' path not specified for '%s'", name));
         }
-        String datadir  = src.optString(KEY_PROJ_DATADIR);
-        if (datadir == null) {
-            throw new IOException(String.format("'datadir' path not specified for '%s'", name));
-        }
-        return new ManagedProject(name, Paths.get(settings), Paths.get(datadir));
+        // String datadir  = src.optString(KEY_PROJ_DATADIR);
+        // if (datadir == null) {
+        //     throw new IOException(String.format("'datadir' path not specified for '%s'", name));
+        // }
+        return new ManagedProjectSpecification(name, Paths.get(settings));
     }
 }

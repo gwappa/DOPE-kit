@@ -23,32 +23,28 @@
  *
  */
 
-package cc.chaos.opendata.mock;
+package cc.chaos.opendata.gui;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
 
-public class MockSelectionUI
+public class SelectionOpenCloseUI
+    implements cc.chaos.opendata.gui.OpenCloseSelectorUI
 {
-    static final String LAB_SETTINGS    = "Settings...";
-    static final String LAB_OPEN        = "Open";
-    static final String LAB_CLOSE       = "Close";
 
     JLabel              _header;
     JComboBox<String>   _selector;
-    JButton             _settings;
     JButton             _toggle;
 
-    public MockSelectionUI(String title, String[] options) {
+    public SelectionOpenCloseUI(String title, ComboBoxModel<String> model) {
         _header   = new JLabel(title);
-        _selector = new JComboBox<>(options);
-        _settings = new JButton(LAB_SETTINGS);
+        _selector = new JComboBox<>(model);
         _toggle   = new JButton(LAB_OPEN);
     }
 
-    public JLabel getHeader() { return _header; }
-    public JComboBox<?> getSelector() { return _selector; }
-    public JButton getSettingsButton() { return _settings; }
-    public JButton getToggleButton() { return _toggle; }
+    @Override public JLabel getHeader() { return _header; }
+    @Override public JComboBox<?> getSelector() { return _selector; }
+    @Override public JButton getToggleButton() { return _toggle; }
 }

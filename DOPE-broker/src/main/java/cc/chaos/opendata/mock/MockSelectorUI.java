@@ -23,16 +23,26 @@
  *
  */
 
-package cc.chaos.opendata.dope.core;
+package cc.chaos.opendata.mock;
 
-import java.nio.file.Path;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
-/**
- *  a value-object interface representing the project information.
- */
-public interface Project
+public class MockSelectorUI
+    implements cc.chaos.opendata.gui.OpenCloseSelectorUI
 {
-    String getName();
-    Path   getSettingsFile();
-    Path   getDataDirectory();
+    JLabel              _header;
+    JComboBox<String>   _selector;
+    JButton             _toggle;
+
+    public MockSelectorUI(String title, String[] options) {
+        _header   = new JLabel(title);
+        _selector = new JComboBox<>(options);
+        _toggle   = new JButton(LAB_OPEN);
+    }
+
+    @Override public JLabel getHeader() { return _header; }
+    @Override public JComboBox<?> getSelector() { return _selector; }
+    @Override public JButton getToggleButton() { return _toggle; }
 }
