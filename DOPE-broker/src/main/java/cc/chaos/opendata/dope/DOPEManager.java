@@ -30,11 +30,25 @@ import java.util.logging.Logger;
 
 import cc.chaos.util.Result;
 import cc.chaos.opendata.dope.core.ProjectSpecification;
+import cc.chaos.opendata.dope.ui.EntityListManager;
 
 public class DOPEManager
     implements DOPE
 {
     static final Logger LOGGER   = Logger.getLogger("OpenData/DOPE");
+
+    static final EntityListManager<ProjectSpecification> NO_PROJECT_EDITOR
+        = new EntityListManager<ProjectSpecification>() {
+            public Result<List<ProjectSpecification>> run(ProjectSpecification[] projects) {
+                return Result.<List<ProjectSpecification>>failure("project editor is not set properly: run setProjectEditor(ProjectEditor) to fix the problem.");
+            }
+        };
+
+    static EntityListManager<ProjectSpecification> _projectEditor = NO_PROJECT_EDITOR;
+
+    static {
+        setProjectEditor(cc.chaos.opendata.dope.ui.DefaultProjectEditor.getInstance());
+    }
 
     static final ProjectSpecification getCurrentProject() {
         return ProjectManager.getCurrentProject();
@@ -44,8 +58,18 @@ public class DOPEManager
         ProjectManager.setCurrentProject(project);
     }
 
+    static final void setProjectEditor(EntityListManager<ProjectSpecification> editor) {
+        if (editor != _projectEditor) {
+            if (editor == null) {
+                _projectEditor = NO_PROJECT_EDITOR;
+            } else {
+                _projectEditor = editor;
+            }
+        }
+    }
+
     static final Result<List<ProjectSpecification>> editProjects(ProjectSpecification[] projects)
     {
-        return Result.<List<ProjectSpecification>>failure("not implemented: <static> DOPEManager.editProejcts(ProjectSpecification[])");
+        return _projectEditor.run(projects);
     }
 }
