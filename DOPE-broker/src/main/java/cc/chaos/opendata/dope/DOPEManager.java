@@ -25,10 +25,27 @@
 
 package cc.chaos.opendata.dope;
 
+import java.util.List;
 import java.util.logging.Logger;
+
+import cc.chaos.util.Result;
+import cc.chaos.opendata.dope.core.ProjectSpecification;
 
 public class DOPEManager
     implements DOPE
 {
     static final Logger LOGGER   = Logger.getLogger("OpenData/DOPE");
+
+    static final ProjectSpecification getCurrentProject() {
+        return ProjectManager.getCurrentProject();
+    }
+
+    static final void setCurrentProject(ProjectSpecification project) {
+        ProjectManager.setCurrentProject(project);
+    }
+
+    static final Result<List<ProjectSpecification>> editProjects(ProjectSpecification[] projects)
+    {
+        return Result.<List<ProjectSpecification>>failure("not implemented: <static> DOPEManager.editProejcts(ProjectSpecification[])");
+    }
 }

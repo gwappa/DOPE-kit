@@ -50,7 +50,7 @@ public class DOPEBroker extends JPanel
 
     JLabel  _status;
 
-    OpenCloseSelectorUI _projects = new SelectionOpenCloseUI("Project: ", new ProjectManager());
+    OpenCloseSelectorUI _projects = new SelectionOpenCloseUI("Project: ", ProjectManager.getInstance());
     OpenCloseSelectorUI _subjects = new MockSelectorUI("Subject: ", SAMPLE_SUBJECTS);
 
     public DOPEBroker() {

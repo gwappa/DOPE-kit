@@ -22,37 +22,13 @@
  * SOFTWARE.
  *
  */
-
 package cc.chaos.opendata.gui;
 
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
-
-public class SelectionOpenCloseUI
-    implements OpenCloseSelectorUI
+public interface OpenCloseSelectionModel<E>
+    extends javax.swing.ComboBoxModel<E>
 {
-
-    JLabel                  _header;
-    OpenCloseSelectionModel _model;
-    JComboBox<?>            _selector;
-    JButton                 _toggle;
-
-    public SelectionOpenCloseUI(String title, OpenCloseSelectionModel<?> model) {
-        _header   = new JLabel(title);
-        _model    = model;
-        _selector = new JComboBox<>(model);
-        _toggle   = new JButton(LAB_OPEN);
-
-        updateWithSelection();
-    }
-
-    protected void updateWithSelection() {
-        _toggle.setEnabled(_model.isSelected());
-    }
-
-    @Override public JLabel getHeader() { return _header; }
-    @Override public JComboBox<?> getSelector() { return _selector; }
-    @Override public JButton getToggleButton() { return _toggle; }
+    /**
+    *   @return if any item is selected in this model.
+    */
+    boolean isSelected();
 }

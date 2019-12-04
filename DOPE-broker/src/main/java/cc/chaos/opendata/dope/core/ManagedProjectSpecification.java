@@ -35,8 +35,8 @@ import org.json.JSONObject;
 public class ManagedProjectSpecification
     implements ProjectSpecification
 {
-    String _name;
-    Path   _settings;
+    final String _name;
+    final Path   _settings;
 
     public ManagedProjectSpecification(final String name,
                           final Path settings)
@@ -49,6 +49,7 @@ public class ManagedProjectSpecification
     @Override public String getName()          { return _name;     }
     @Override public Path   getSettingsFile()  { return _settings; }
     // @Override public Path   getDataDirectory() { return _datadir;  }
+    @Override public String toString()         { return _name; }
 
     /**
      *  initializes a ManagedProject from a JSON entry.
@@ -69,5 +70,10 @@ public class ManagedProjectSpecification
         //     throw new IOException(String.format("'datadir' path not specified for '%s'", name));
         // }
         return new ManagedProjectSpecification(name, Paths.get(settings));
+    }
+
+    public static ManagedProjectSpecification load(ProjectSpecification other)
+    {
+        return new ManagedProjectSpecification(other.getName(), other.getSettingsFile());
     }
 }
