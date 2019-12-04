@@ -23,7 +23,7 @@
  *
  */
 
-package cc.chaos.opendata.gui;
+package cc.chaos.opendata.ui;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;

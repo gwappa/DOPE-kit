@@ -22,14 +22,13 @@
  * SOFTWARE.
  *
  */
-package cc.chaos.opendata.gui;
 
-public interface OpenCloseSelectorUI
+package cc.chaos.ui;
+
+public interface GUIConstants
 {
-    static final String LAB_OPEN        = "Open";
-    static final String LAB_CLOSE       = "Close";
-
-    javax.swing.JLabel getHeader();
-    javax.swing.JComboBox<?> getSelector();
-    javax.swing.JButton getToggleButton();
+    static final int    BORDER_SIDE     = 5;
+    static final int    BORDER_TOP      = 5;
+    static final int    BORDER_BOTTOM   = 15;
+    static final int    BORDER_BETWEEN  = 2;
 }

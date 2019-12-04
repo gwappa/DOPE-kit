@@ -22,13 +22,14 @@
  * SOFTWARE.
  *
  */
-package cc.chaos.opendata.gui;
+package cc.chaos.opendata.ui;
 
-public interface OpenCloseSelectionModel<E>
-    extends javax.swing.ComboBoxModel<E>
+public interface OpenCloseSelectorUI
 {
-    /**
-    *   @return if any item is selected in this model.
-    */
-    boolean isSelected();
+    static final String LAB_OPEN        = "Open";
+    static final String LAB_CLOSE       = "Close";
+
+    javax.swing.JLabel getHeader();
+    javax.swing.JComboBox<?> getSelector();
+    javax.swing.JButton getToggleButton();
 }

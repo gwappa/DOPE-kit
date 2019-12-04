@@ -30,7 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 public class MockSelectorUI
-    implements cc.chaos.opendata.gui.OpenCloseSelectorUI
+    implements cc.chaos.opendata.ui.OpenCloseSelectorUI
 {
     JLabel              _header;
     JComboBox<String>   _selector;

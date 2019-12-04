@@ -37,11 +37,11 @@ import java.awt.GridBagConstraints;
 
 import cc.chaos.opendata.dope.ProjectManager;
 import cc.chaos.opendata.mock.MockSelectorUI;
-import cc.chaos.opendata.gui.OpenCloseSelectorUI;
-import cc.chaos.opendata.gui.SelectionOpenCloseUI;
+import cc.chaos.opendata.ui.OpenCloseSelectorUI;
+import cc.chaos.opendata.ui.SelectionOpenCloseUI;
 
 public class DOPEBroker extends JPanel
-    implements cc.chaos.gui.GUIConstants
+    implements cc.chaos.ui.GUIConstants
 {
     static final String     INITIAL_MSG     = "DOPE broker, version 1.0.0a1";
 

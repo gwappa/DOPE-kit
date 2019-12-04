@@ -22,13 +22,13 @@
  * SOFTWARE.
  *
  */
+package cc.chaos.opendata.ui;
 
-package cc.chaos.gui;
-
-public interface GUIConstants
+public interface OpenCloseSelectionModel<E>
+    extends javax.swing.ComboBoxModel<E>
 {
-    static final int    BORDER_SIDE     = 5;
-    static final int    BORDER_TOP      = 5;
-    static final int    BORDER_BOTTOM   = 15;
-    static final int    BORDER_BETWEEN  = 2;
+    /**
+    *   @return if any item is selected in this model.
+    */
+    boolean isSelected();
 }

@@ -41,7 +41,7 @@ import cc.chaos.opendata.dope.core.ManagedProjectSpecification;
  *  a class that manages DOPE projects
  */
 public class ProjectManager
-    implements cc.chaos.opendata.gui.OpenCloseSelectionModel<ProjectSpecification>
+    implements cc.chaos.opendata.ui.OpenCloseSelectionModel<ProjectSpecification>
 {
     static final Logger         LOGGER     = Logger.getLogger("OpenData/DOPE");
 
